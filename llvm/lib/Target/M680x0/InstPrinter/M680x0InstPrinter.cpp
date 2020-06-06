@@ -37,8 +37,8 @@ void M680x0InstPrinter::printRegName(raw_ostream &OS, unsigned RegNo) const {
   OS << "%" << StringRef(getRegisterName(RegNo));
 }
 
-void M680x0InstPrinter::printInst(const MCInst *MI, raw_ostream &O,
-                                  StringRef Annot, const MCSubtargetInfo &STI) {
+void M680x0InstPrinter::printInst(const MCInst *MI, uint64_t Address,
+                                  StringRef Annot, const MCSubtargetInfo &STI, raw_ostream &O) {
   if (!printAliasInstr(MI, O)) {
     printInstruction(MI, O);
   }

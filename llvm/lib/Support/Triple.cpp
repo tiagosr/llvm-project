@@ -1348,6 +1348,8 @@ Triple Triple::get32BitArchVariant() const {
   case Triple::wasm32:
   case Triple::x86:
   case Triple::xcore:
+  case Triple::m680x0:
+  case Triple::m68k:
     // Already 32-bit.
     break;
 
@@ -1386,6 +1388,8 @@ Triple Triple::get64BitArchVariant() const {
   case Triple::tce:
   case Triple::tcele:
   case Triple::xcore:
+  case Triple::m680x0:
+  case Triple::m68k:
     T.setArch(UnknownArch);
     break;
 

@@ -24,7 +24,7 @@
 #include "llvm/Support/DataTypes.h"
 #include "llvm/Support/ErrorHandling.h"
 
-#define GET_INSTRINFO_MI_OPS_INFO
+#define GET_INSTRINFO_OPERAND_TYPES_ENUM
 #include "M680x0GenInstrInfo.inc"
 
 namespace llvm {
@@ -247,12 +247,12 @@ static inline bool isPCRelOpd(unsigned Opd) {
   switch (Opd) {
   default:
     return false;
-  case M680x0::MIOpTypes::MxPCD32:
-  case M680x0::MIOpTypes::MxPCD16:
-  case M680x0::MIOpTypes::MxPCD8:
-  case M680x0::MIOpTypes::MxPCI32:
-  case M680x0::MIOpTypes::MxPCI16:
-  case M680x0::MIOpTypes::MxPCI8:
+  case M680x0::OpTypes::MxPCD32:
+  case M680x0::OpTypes::MxPCD16:
+  case M680x0::OpTypes::MxPCD8:
+  case M680x0::OpTypes::MxPCI32:
+  case M680x0::OpTypes::MxPCI16:
+  case M680x0::OpTypes::MxPCI8:
   case MCOI::OPERAND_PCREL:
     return true;
   }
@@ -262,32 +262,32 @@ static inline unsigned getDispSize(unsigned Opd) {
   switch (Opd) {
   default:
     return 0;
-  case M680x0::MIOpTypes::MxAL16:
-  case M680x0::MIOpTypes::MxAL32:
-  case M680x0::MIOpTypes::MxAL8:
+  case M680x0::OpTypes::MxAL16:
+  case M680x0::OpTypes::MxAL32:
+  case M680x0::OpTypes::MxAL8:
     return 32;
-  case M680x0::MIOpTypes::MxARID16:
-  case M680x0::MIOpTypes::MxARID16_TC:
-  case M680x0::MIOpTypes::MxARID32:
-  case M680x0::MIOpTypes::MxARID32_TC:
-  case M680x0::MIOpTypes::MxARID8:
-  case M680x0::MIOpTypes::MxARID8_TC:
-  case M680x0::MIOpTypes::MxPCD16:
-  case M680x0::MIOpTypes::MxPCD32:
-  case M680x0::MIOpTypes::MxPCD8:
-  case M680x0::MIOpTypes::MxAS16:
-  case M680x0::MIOpTypes::MxAS32:
-  case M680x0::MIOpTypes::MxAS8:
+  case M680x0::OpTypes::MxARID16:
+  case M680x0::OpTypes::MxARID16_TC:
+  case M680x0::OpTypes::MxARID32:
+  case M680x0::OpTypes::MxARID32_TC:
+  case M680x0::OpTypes::MxARID8:
+  case M680x0::OpTypes::MxARID8_TC:
+  case M680x0::OpTypes::MxPCD16:
+  case M680x0::OpTypes::MxPCD32:
+  case M680x0::OpTypes::MxPCD8:
+  case M680x0::OpTypes::MxAS16:
+  case M680x0::OpTypes::MxAS32:
+  case M680x0::OpTypes::MxAS8:
     return 16;
-  case M680x0::MIOpTypes::MxARII16:
-  case M680x0::MIOpTypes::MxARII16_TC:
-  case M680x0::MIOpTypes::MxARII32:
-  case M680x0::MIOpTypes::MxARII32_TC:
-  case M680x0::MIOpTypes::MxARII8:
-  case M680x0::MIOpTypes::MxARII8_TC:
-  case M680x0::MIOpTypes::MxPCI16:
-  case M680x0::MIOpTypes::MxPCI32:
-  case M680x0::MIOpTypes::MxPCI8:
+  case M680x0::OpTypes::MxARII16:
+  case M680x0::OpTypes::MxARII16_TC:
+  case M680x0::OpTypes::MxARII32:
+  case M680x0::OpTypes::MxARII32_TC:
+  case M680x0::OpTypes::MxARII8:
+  case M680x0::OpTypes::MxARII8_TC:
+  case M680x0::OpTypes::MxPCI16:
+  case M680x0::OpTypes::MxPCI32:
+  case M680x0::OpTypes::MxPCI8:
     return 8;
   }
 }
