@@ -614,6 +614,11 @@ enum {
 #include "ELFRelocs/Lanai.def"
 };
 
+// ELF Relocation types for M680x0
+enum {
+#include "ELFRelocs/m680x0.def"
+};
+
 // RISCV Specific e_flags
 enum : unsigned {
   EF_RISCV_RVC = 0x0001,
