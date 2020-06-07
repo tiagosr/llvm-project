@@ -97,17 +97,13 @@ public:
   /// True if the stack can be realigned for the target.
   bool canRealignStack(const MachineFunction &MF) const override;
 
-  unsigned getFrameRegister(const MachineFunction &MF) const override;
+  Register getFrameRegister(const MachineFunction &MF) const override;
   unsigned getStackRegister() const { return StackPtr; }
   unsigned getBaseRegister() const { return BasePtr; }
   unsigned getGlobalBaseRegister() const { return GlobalBasePtr; }
 
   const TargetRegisterClass *intRegClass(unsigned Size) const;
 
-  // FIXME #52 Actually implement any size spill and remove this override
-  unsigned getSpillSize(const TargetRegisterClass &RC) const override {
-    return 4;
-  }
 };
 
 } // end namespace llvm

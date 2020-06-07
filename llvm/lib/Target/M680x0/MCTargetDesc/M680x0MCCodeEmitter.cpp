@@ -131,11 +131,11 @@ unsigned M680x0MCCodeEmitter::EncodeReg(unsigned ThisByte, uint8_t Bead,
                     << " Op: " << Op << ", DA: " << DA << ", Reg: " << Reg
                     << ", Alt: " << Alt << "\n");
 
-  assert(Op < Desc.NumMIOperands);
-  MIOperandInfo MIO = Desc.MIOpInfo[Op];
-  bool isPCRel = M680x0II::isPCRelOpd(MIO.Type);
+  assert(Op < Desc.NumOperands);
+  MCOperandInfo MIO = Desc.OpInfo[Op];
+  bool isPCRel = M680x0II::isPCRelOpd(MIO.OperandType);
   MCOperand MCO;
-  if (MIO.isTargetType() && MIO.OpsNum > 1) {
+  if (MIO.isBranchTarget() && MIO.OpsNum > 1) {
     if (isPCRel) {
       assert(Alt &&
              "PCRel addresses use Alt bead register encoding by default");
@@ -211,9 +211,9 @@ unsigned M680x0MCCodeEmitter::EncodeImm(unsigned ThisByte, uint8_t Bead,
   unsigned Op = (Bead & 0x70) >> 4;
   bool Alt = (Bead & 0x80);
 
-  assert(Op < Desc.NumMIOperands);
-  MIOperandInfo MIO = Desc.MIOpInfo[Op];
-  bool isPCRel = M680x0II::isPCRelOpd(MIO.Type);
+  assert(Op < Desc.NumOperands);
+  MCOperandInfo MIO = Desc.OpInfo[Op];
+  bool isPCRel = M680x0II::isPCRelOpd(MIO.OperandType);
 
   // The PC value upon instruction reading of a short jump will point to the
   // next instruction, thus we need to compensate 2 bytes, which is the diff
@@ -258,7 +258,7 @@ unsigned M680x0MCCodeEmitter::EncodeImm(unsigned ThisByte, uint8_t Bead,
                     << "\n");
 
   MCOperand MCO;
-  if (MIO.isTargetType()) {
+  if (MIO.isBranchTarget()) {
 
     if (isPCRel) {
       assert(!Alt && "You cannot use ALT operand with PCRel");

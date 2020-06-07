@@ -41,7 +41,7 @@ using namespace llvm;
 #define GET_REGINFO_MC_DESC
 #include "M680x0GenRegisterInfo.inc"
 
-static StringRef ParseM680x0Triple(const Triple &TT, StringRef CPU) {
+static std::string ParseM680x0Triple(const Triple &TT, StringRef CPU) {
   std::string FS = "";
   return FS;
 }
@@ -65,13 +65,14 @@ createM680x0MCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
     if (!ArchFS.empty())
       ArchFS = ArchFS + "," + FS.str();
     else
-      ArchFS = FS;
+      ArchFS = FS.str();
   }
   return createM680x0MCSubtargetInfoImpl(TT, CPU, ArchFS);
 }
 
 static MCAsmInfo *createM680x0MCAsmInfo(const MCRegisterInfo &MRI,
-                                        const Triple &TT) {
+                                        const Triple &TT,
+                                        const MCTargetOptions &Options) {
   MCAsmInfo *MAI = new M680x0ELFMCAsmInfo(TT);
 
   // Initialize initial frame state.
@@ -79,7 +80,7 @@ static MCAsmInfo *createM680x0MCAsmInfo(const MCRegisterInfo &MRI,
   int stackGrowth = -4;
 
   // Initial state of the frame pointer is SP+stackGrowth.
-  MCCFIInstruction Inst = MCCFIInstruction::createDefCfa(
+  MCCFIInstruction Inst = MCCFIInstruction::cfiDefCfa(
       nullptr, MRI.getDwarfRegNum(llvm::M680x0::SP, true), -stackGrowth);
   MAI->addInitialFrameState(Inst);
 
